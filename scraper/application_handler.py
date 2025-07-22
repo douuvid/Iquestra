@@ -297,36 +297,27 @@ def verifier_et_postuler(driver, user_data):
                         )
                         logger.info(f"Bouton de soumission trouvé: {submit_button.text if hasattr(submit_button, 'text') else selector}")
                         
-                        # Essayer différentes méthodes de clic
+                        # Méthode optimisée : DOUBLE CLIC NORMAL (méthode validée)
                         try:
-                            # 1. Clic normal
-                            logger.info("Tentative de clic normal")
+                            logger.info("🎯 Utilisation de la méthode validée : DOUBLE CLIC normal")
+                            # Premier clic
                             submit_button.click()
-                            logger.info("✓ Clic normal sur le bouton de soumission réussi")
+                            logger.info("   → Premier clic effectué")
+                            # Pause courte entre les clics
+                            time.sleep(0.5)
+                            # Deuxième clic
+                            submit_button.click()
+                            logger.info("   → Deuxième clic effectué")
+                            logger.info("✅ Double clic normal réussi - Candidature soumise")
                         except Exception as click_error:
-                            logger.warning(f"Clic normal échoué: {click_error}")
-                            try:
-                                # 2. Clic via JavaScript
-                                logger.info("Tentative de clic via JavaScript")
-                                driver.execute_script("arguments[0].click();", submit_button)
-                                logger.info("✓ Clic JavaScript sur le bouton de soumission réussi")
-                            except Exception as js_error:
-                                logger.warning(f"Clic JavaScript échoué: {js_error}")
-                                # 3. Dernier recours: simulation de clic via ActionChains
-                                from selenium.webdriver.common.action_chains import ActionChains
-                                try:
-                                    logger.info("Tentative de clic via ActionChains")
-                                    ActionChains(driver).move_to_element(submit_button).click().perform()
-                                    logger.info("✓ Clic ActionChains sur le bouton de soumission réussi")
-                                except Exception as action_error:
-                                    logger.error(f"Échec de toutes les méthodes de clic: {action_error}")
-                                    continue
+                            logger.error(f"❌ Échec du double clic normal: {click_error}")
+                            continue
                         
-                        # Si nous arrivons ici, le clic a fonctionné
+                        # Si nous arrivons ici, le double clic a fonctionné
                         success = True
                         
                         # Attendre un peu pour voir si la page change après le clic
-                        logger.info("Attente post-clic pour voir si la page change...")
+                        logger.info("⏳ Attente post-clic pour voir si la page change...")
                         time.sleep(5)
                         
                         break

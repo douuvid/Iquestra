@@ -17,22 +17,16 @@ dotenv_path = os.path.join(project_root, '.env')
 # Chargement des variables d'environnement
 load_dotenv(dotenv_path=dotenv_path, override=True)
 
-# Génération d'un email aléatoire pour avoir un nouvel ID utilisateur
-def generate_random_email():
-    letters = string.ascii_lowercase
-    random_string = ''.join(random.choice(letters) for i in range(8))
-    return f"{random_string}@testmail.com"
+# Nouvel utilisateur Kim Alya pour tester le double clic
+email = "keviv22161@modirosa.com"
 
 # Connexion directe à la base de données
 db_path = os.getenv('DATABASE_PATH', os.path.join(os.path.dirname(__file__), 'database', 'users.db'))
 conn = sqlite3.connect(db_path)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
-
-# Préparation des données utilisateur
-email = generate_random_email()
-first_name = "Test"
-last_name = "Nouveau"
+first_name = "Kim"
+last_name = "Alya"
 cv_path = os.path.join(project_root, "cv_files", "potatoes.pdf")
 lm_path = os.path.join(project_root, "cv_files", "potatoes.pdf")
 search_query = "Développeur Web"

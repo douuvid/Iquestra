@@ -104,6 +104,68 @@ Le système génère des logs détaillés pour chaque étape :
 - Traitement des offres
 - Remplissage et soumission des formulaires
 
+## 📦 Extraction de code pour intégration
+
+### 🎯 **Fonctions essentielles à conserver**
+
+Si vous voulez intégrer cette automatisation dans un autre projet, voici les éléments **indispensables** :
+
+#### 🥇 **PRIORITÉ 1 - Fonctions critiques :**
+
+**1. Sélection de région** (`search_utils.py`) :
+```python
+def try_select_region(driver, region_target):
+    """Sélectionne Île-de-France (value='10') dans le formulaire iQuesta"""
+    # Cette fonction est CRUCIALE - elle gère la sélection "Île-de-France" (value="10")
+    # C'était le problème principal que nous avons résolu !
+```
+
+**2. Soumission de candidature** (`application_handler.py`) :
+```python
+def verifier_et_postuler(driver, user_data):
+    """Remplit et soumet le formulaire de candidature complet"""
+    # Fonction complète qui :
+    # - Remplit tous les champs (email, nom, prénom, message)
+    # - Upload CV et lettre de motivation
+    # - Clique sur "Postuler" avec plusieurs méthodes de fallback
+```
+
+**3. Recherche d'offres** (`search_handler.py`) :
+```python
+def rechercher_offres(driver, metier=None, region_text=None):
+    """Gère la recherche complète avec sélection de région"""
+```
+
+#### 🥈 **PRIORITÉ 2 - Configuration Selenium :**
+```python
+def initialiser_driver():
+    """Initialise Chrome avec les bonnes options"""
+    # Configuration Chrome optimisée pour l'automatisation
+```
+
+### 📋 **Fichiers à extraire par ordre d'importance :**
+
+1. **`scraper/search_utils.py`** - Fonction `try_select_region` ✅ **INDISPENSABLE**
+2. **`scraper/application_handler.py`** - Fonction `verifier_et_postuler` ✅ **INDISPENSABLE**
+3. **`scraper/search_handler.py`** - Logique de recherche
+4. **Configuration Chrome** d'`iquesta_scraper.py`
+
+### ❌ **Ce que vous pouvez ignorer :**
+- `database/` (sauf si vous voulez la persistance)
+- Scripts de test (`add_test_user.py`, etc.)
+- `requirements.txt` (vous avez probablement vos propres dépendances)
+- `.env`, `.gitignore` (spécifiques au projet)
+
+### 🎯 **Code minimal pour intégration :**
+
+Pour intégrer dans votre code, vous avez besoin de **ces 3 fonctions principales** :
+
+1. `try_select_region()` - Sélection région Île-de-France
+2. `verifier_et_postuler()` - Soumission candidature complète  
+3. `initialiser_driver()` - Configuration Selenium
+
+Avec ces 3 fonctions, vous avez l'essentiel de l'automatisation qui **fonctionne et a prouvé son efficacité** (3 candidatures réussies) ! 🚀
+
 ## ⚠️ Avertissements
 
 - Utiliser de manière responsable et éthique
@@ -116,4 +178,4 @@ Ce projet est en développement actif. Les améliorations sont les bienvenues !
 
 ---
 **Dernière mise à jour** : 20 juillet 2025
-**Statut** : Sélection de région ✅ | Candidatures en cours d'optimisation 🔄
+**Statut** : Automatisation complète ✅ | 3 candidatures réussies 🎉
